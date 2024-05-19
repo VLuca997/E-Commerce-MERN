@@ -37,7 +37,17 @@ npm i nodemon multer mongoose jsonwebtoken express-formidable express-async-hand
 
 
 
-#
+# FRONTEND STYLE CON TAIWINDCSS
+- cd frontend
+- npm install -D tailwindcss postcss autoprefixer
+- npx tailwindcss init -p
+
+- on tailwind.config.js:     content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
+
+- on App.css:  
+            @tailwind base;
+            @tailwind components;
+            @tailwind utilities;
 
 
 
