@@ -22,7 +22,7 @@ npm i nodemon multer mongoose jsonwebtoken express-formidable express-async-hand
 
 
 # Aprire il file package.json fuori dai folder:
-
+  "type": "module",
  "scripts": {
     "backend": "nodemon backend/index.js",
     "frontend": "npm run dev --prefix frontend",
@@ -33,7 +33,7 @@ npm i nodemon multer mongoose jsonwebtoken express-formidable express-async-hand
 
 
 
-#
+# POSTMAN ED API 
 
 
 
