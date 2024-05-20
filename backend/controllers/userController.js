@@ -1,43 +1,63 @@
 import User from "../models/userModel.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
-import bcrypt from 'bcryptjs/dist/bcrypt.js'
+import bcrypt from 'bcryptjs';
+import generateToken from '../utils/createToken.js';
 
-
-
+// creare di un nuovo utente
 const createUser = asyncHandler(async (request, response) => {
-    const {username,password,email} = request.body;
-  
-if(!username || !password || !email){
-    throw new Error("Inserisci tutti gli input");
-}
-const userExist = await User.findOne({email})
-if(userExist){
-    response.status(400).send("L'utente gia esiste.");
-}
+    const { username, password, email } = request.body;
 
-const salt = await bcrypt.genSalt(10);
-const hashedPassword =await bcrypt.hash(password,salt)
+    if (!username || !password || !email) {
+        return response.status(400).json({ message: "Inserisci tutti gli input" });
+    }
 
-const newUser = new User({username,email,password: hashedPassword});
+    const userExist = await User.findOne({ email });
+    if (userExist) {
+        return response.status(400).json({ message: "L'utente già esiste." });
+    }
 
-try {
-    await newUser.save();
-    response 
-        .status(201)
-        .json({
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newUser = new User({ username, email, password: hashedPassword });
+
+    try {
+        await newUser.save();
+        generateToken(response, newUser._id);
+        return response.status(201).json({
             _id: newUser._id,
             username: newUser.username,
             email: newUser.email,
             isAdmin: newUser.isAdmin
-        })
-
-
-} catch (error) {
-    response.status(400);
-    throw new Error("I dati non sono corretti!")
-
-}
-
+        });
+    } catch (error) {
+        return response.status(400).json({ message: "I dati non sono corretti!" });
+    }
 });
 
-export { createUser };
+// Login utente esistente
+const loginUser = asyncHandler(async (request, response) => {
+    const { email, password } = request.body; 
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+        const isPasswordValid = await bcrypt.compare(password, existingUser.password); 
+        
+        if (isPasswordValid) {
+            generateToken(response, existingUser._id);
+            return response.status(200).json({
+                _id: existingUser._id,
+                username: existingUser.username,
+                email: existingUser.email,
+                isAdmin: existingUser.isAdmin
+            });
+        } else {
+            return response.status(401).json({ message: "Credenziali non valide" });
+        }
+    } else {
+        return response.status(401).json({ message: "Credenziali non valide" });
+    }
+});
+
+export { createUser, loginUser };
