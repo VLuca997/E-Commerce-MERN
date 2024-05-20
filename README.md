@@ -51,7 +51,8 @@ npm i nodemon multer mongoose jsonwebtoken express-formidable express-async-hand
 
 
 
-#
+# DEFINIAMO " USER ":
+creare file per user: userModel, userController, userRoutes
 
 
 
