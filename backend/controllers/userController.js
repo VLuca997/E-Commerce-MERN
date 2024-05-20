@@ -103,14 +103,16 @@ const updateCurrentlyUserProfile = asyncHandler(async(request,response) => {
         user.username = request.body.username || user.username,
         user.email = request.body.email || user.email
 
+        //SE MODIFICHIAMO AL PASSWORD, SI DECRIPTA E CRIPTA.
         if(request.body.password){
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(request.body.password, salt);
             user.password = hashedPassword;
         }
-
+        //SALVIAMO L'UTENTE APPENA MODIFICATO
         const updateUser = await user.save();
-
+        
+        //DATI AGGIORNATI EMANATI VIA JSON
         response.json({
             _id: updateUser._id,
             username: updateUser.username,
@@ -124,5 +126,30 @@ const updateCurrentlyUserProfile = asyncHandler(async(request,response) => {
 })
 
 
+//DELETE USER BY ID
+const deleteUserById = asyncHandler(async(request,response) => {
+    const user = await User.findById(request.params.id)
+    if(user){
+        if(user.isAdmin){
+            response.status(400);
+            throw new Error("l'utente è un AMMINISTRATORE, non puo essere rimosso")
+        }
+        await User.deleteOne({_id: user._id})
+        response.json({message:"UTENTE NORMALE RIMOSSO!"})
+    }else{
+        response.status(400)
+        throw new Error("Utente non trovato!")
+    }
+});
+
 //RETURN DI TUTTE LE FUNZIONI DI QUESTO FOGLIO
-export { createUser, loginUser, logoutCurrentUser, getAllUsers, getCurrentlyUserProfile, updateCurrentlyUserProfile };
+export {    
+        createUser, 
+        loginUser, 
+        logoutCurrentUser, 
+        getAllUsers, 
+        getCurrentlyUserProfile, 
+        updateCurrentlyUserProfile, 
+        deleteUserById
+
+        };
