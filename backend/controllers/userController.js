@@ -63,7 +63,7 @@ const loginUser = asyncHandler(async (request, response) => {
 //LOGOUT
 const logoutCurrentUser = asyncHandler(async (request, response) => {
 
-    response.cookie("jwt" ,'', {
+    response.cookie("jwToken" ,'', {
         httpOnly: true,
         expires: new Date(0),
     })
