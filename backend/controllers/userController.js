@@ -82,7 +82,7 @@ const getAllUsers = asyncHandler(async(request,response)=>{
     response.json(users)
 })
 
-//SHOW SINGLE USER
+//SHOW SINGLE USER LOGGED
 const getCurrentlyUserProfile = asyncHandler(async(request,response) =>{
     const user = await User.findById(request.user._id)
     if(user){
@@ -142,6 +142,45 @@ const deleteUserById = asyncHandler(async(request,response) => {
     }
 });
 
+
+//USERS SHOW BY ID
+const getUserById = asyncHandler(async ( request,response )=>{
+    const user = await User.findById(request.params.id).select("-password")
+    if(user){
+        response.json(user);
+    }else{
+        response.status(404)
+        throw new Error("UTENTE NO TROVATO")
+    }
+})
+
+
+
+
+//UPDATE By ID
+const updateUserById = asyncHandler(async(request,response)=>{
+    const user = await User.findById(request.params.id)
+
+    if(user){
+        user.username = request.body.username || user.username,
+        user.email = request.body.email || user.email,
+        user.isAdmin = Boolean(request.body.isAdmin)
+
+
+        const updatedUser = await user.save();
+        response.json({
+            _id: updatedUser._id,
+            username: updatedUser.username,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+        })
+    }else{
+        response.status(404)
+        throw new Error("Utente non trovato per modifiche")
+    }
+})
+
+
 //RETURN DI TUTTE LE FUNZIONI DI QUESTO FOGLIO
 export {    
         createUser, 
@@ -150,6 +189,8 @@ export {
         getAllUsers, 
         getCurrentlyUserProfile, 
         updateCurrentlyUserProfile, 
-        deleteUserById
+        deleteUserById,
+        getUserById,
+        updateUserById
 
         };
