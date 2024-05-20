@@ -60,4 +60,14 @@ const loginUser = asyncHandler(async (request, response) => {
     }
 });
 
-export { createUser, loginUser };
+//LOGOUT
+const logoutCurrentUser = asyncHandler(async (request, response) => {
+
+    response.cookie("jwt" ,'', {
+        httpOnly: true,
+        expires: new Date(0),
+    })
+    response.status(200).json({message: "LOGGED OUT EFFETTUATO CON SUCCESSO"})
+})
+
+export { createUser, loginUser, logoutCurrentUser };
