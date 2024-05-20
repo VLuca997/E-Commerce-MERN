@@ -51,7 +51,15 @@ npm i nodemon multer mongoose jsonwebtoken express-formidable express-async-hand
 
 
 
-#
+# DEFINIAMO " USER ":
+creare file per user: userModel, userController, userRoutes
+POSTMAN: -> POST http://localhost:5000/api/users
+                  {
+                      "username" : "Luca",
+                      "email" : "email@gmail.com",
+                      "password": "password123"
+
+                  }
 
 
 
