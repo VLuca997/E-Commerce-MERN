@@ -82,6 +82,7 @@ const getAllUsers = asyncHandler(async(request,response)=>{
     response.json(users)
 })
 
+//SHOW SINGLE USER
 const getCurrentlyUserProfile = asyncHandler(async(request,response) =>{
     const user = await User.findById(request.user._id)
     if(user){
@@ -95,7 +96,7 @@ const getCurrentlyUserProfile = asyncHandler(async(request,response) =>{
         throw new Error("Utente non trovato!")
     }
 })
-
+//UPDATE single User
 const updateCurrentlyUserProfile = asyncHandler(async(request,response) => {
     const user = await User.findById(request.user._id)
     if(user){
@@ -103,7 +104,9 @@ const updateCurrentlyUserProfile = asyncHandler(async(request,response) => {
         user.email = request.body.email || user.email
 
         if(request.body.password){
-            user.password = request.body.password
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(request.body.password, salt);
+            user.password = hashedPassword;
         }
 
         const updateUser = await user.save();
