@@ -82,6 +82,44 @@ const getAllUsers = asyncHandler(async(request,response)=>{
     response.json(users)
 })
 
+const getCurrentlyUserProfile = asyncHandler(async(request,response) =>{
+    const user = await User.findById(request.user._id)
+    if(user){
+            response.json({
+                _id: user._id,
+                username: user.username,
+                email: user.email
+            })
+    }else{
+        response.status(404)
+        throw new Error("Utente non trovato!")
+    }
+})
+
+const updateCurrentlyUserProfile = asyncHandler(async(request,response) => {
+    const user = await User.findById(request.user._id)
+    if(user){
+        user.username = request.body.username || user.username,
+        user.email = request.body.email || user.email
+
+        if(request.body.password){
+            user.password = request.body.password
+        }
+
+        const updateUser = await user.save();
+
+        response.json({
+            _id: updateUser._id,
+            username: updateUser.username,
+            _email: updateUser.email,
+            isAdmin: updateUser.isAdmin,
+        })
+    }else{
+        response.status(404)
+        throw new Error("Utente non trovato per le modifiche!")
+    }
+})
+
 
 //RETURN DI TUTTE LE FUNZIONI DI QUESTO FOGLIO
-export { createUser, loginUser, logoutCurrentUser, getAllUsers };
+export { createUser, loginUser, logoutCurrentUser, getAllUsers, getCurrentlyUserProfile, updateCurrentlyUserProfile };
