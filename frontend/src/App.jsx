@@ -1,14 +1,23 @@
-import { useState } from 'react'
+import React from 'react'
 import './App.css'
 
-function App() {
+import { Outlet } from 'react-router-dom'
+import Navigation from './pages/Auth/Navigation'
+import { ToastContainer } from 'react-toastify' // Container per notifiche
 
+import 'react-toastify/dist/ReactToastify.css' // Importa gli stili di Toastify
+
+function App() {
   return (
     <>
-      <div className='bg-red-500'>
-        PAGE APP
-      </div>
-        
+        {/* Contenitore per le notifiche */}
+      <ToastContainer />
+      {/* Componente di navigazione */}
+      <Navigation />
+      <main className='py-5'>
+        {/* Outlet renderizza i componenti figli definiti nelle route */}
+        <Outlet />
+      </main>
     </>
   )
 }
