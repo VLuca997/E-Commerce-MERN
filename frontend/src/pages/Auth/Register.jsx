@@ -124,6 +124,7 @@ export const Register = () => {
           </p>
         </div>
       </div>
+      <img className='h-[65rem] w-[59%] object-cover rounded-3xl m-5 xl-block lg:block md:hidden sm:hidden' src="https://img.pikbest.com/backgrounds/20200810/abstract-blue-gradient-background-design-vector-template-v_2453974jpg!bw700" alt="" />
     </section>
   );
 }

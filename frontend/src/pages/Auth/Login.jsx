@@ -96,7 +96,7 @@ export const Login = () => {
 
                 </div>
             </div>
-
+            <img className='h-[65rem] w-[59%] object-cover rounded-3xl m-5 xl-block lg:block md:hidden sm:hidden' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7bjxD8vhOt-0jE8b-ZZgJVElQVOV1_vgl0kYE2Xh57w&s" alt="" />
         </section>
 
     </div>
