@@ -5,7 +5,7 @@ import { useLoginMutation } from '../../redux/api/userApiSlice'
 import { setCredentials } from '../../redux/features/auth/authSlice'
 import { toast } from 'react-toastify'
 import Loader from '../../components/Loader'
-
+import { Register } from './Register'
 
 
 
