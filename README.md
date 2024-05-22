@@ -51,7 +51,7 @@ npm i nodemon multer mongoose jsonwebtoken express-formidable express-async-hand
 
 
 
-# DEFINIAMO " USER ":
+# DEFINIAMO " USER " POSTMAN:
 creare file per user: userModel, userController, userRoutes
 POSTMAN: -> POST http://localhost:5000/api/users
                   {
@@ -63,7 +63,7 @@ POSTMAN: -> POST http://localhost:5000/api/users
 
 
 
-#
+# FLOWBITE componentistica Tailwindcss
 
 
 

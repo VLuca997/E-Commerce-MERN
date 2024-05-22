@@ -36,5 +36,8 @@ router
 router.post("/auth", loginUser);
 router.post("/logout", logoutCurrentUser);
 
+// Configura l'endpoint per la registrazione degli utenti
+router.route("/register").post(createUser);
+
 
 export default router;
