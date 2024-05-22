@@ -69,4 +69,31 @@ const removeCategory = asyncHandler(async(request,response) =>{
     }
 })
 
-export { createCategory,updatedCategory,removeCategory };
+const listCategory = asyncHandler(async(request,response) =>{
+    try {
+        const all = await Category.find({})
+        response.json(all)
+
+    } catch (error) {
+        console.log(error)
+        response.status(400).json(error.message)
+    }
+
+
+})
+
+
+const readCategory = asyncHandler(async(request,response) =>{
+
+    try {
+        const category = await Category.findOne({_id: request.params.id})
+        response.json(category)
+        
+
+    } catch (error) {
+        console.log(error)
+        response.status(400).json(error.message)
+    }
+})
+
+export { createCategory,updatedCategory,removeCategory,listCategory,readCategory};
