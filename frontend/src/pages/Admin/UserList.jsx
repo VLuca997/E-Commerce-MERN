@@ -28,11 +28,37 @@ export const UserList = () => {
     }, [refetch]);
 
 
+    //EDIT
+    const toggleEdit = (id,username,email) =>{
+        setEditableUserId(id);
+        setEditableUserEmail(email);
+        setEditableUserName(username)
+    }
 
+    const updateHandler = async (id) =>{
+        try {   
+            
+            await updateUser({
+                userId:id,
+                username: editableUserName,
+                email: editableUserEmail,
+
+            })
+
+            setEditableUserId(null)
+            refetch();
+
+        } catch (error) {
+            toast.error(error.data.message || error.error)
+        }
+    }
+
+    //DELETE
     const deleteHandler = async (id) => {
         if(window.confirm(`sei sicuro ?`)){
             try {
                 await deleteUser(id)
+                refetch();
             } catch (error) {
                 toast.error(error.data.message || error.error)
             }
@@ -58,7 +84,7 @@ export const UserList = () => {
                         </thead>
                         <tbody>
                             {users.map(user => (
-                                <tr key={user.id}>
+                                <tr key={user._id}>
 
 
                                     <td className="px-4 py-2">
