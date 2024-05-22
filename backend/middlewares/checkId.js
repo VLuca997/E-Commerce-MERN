@@ -8,7 +8,7 @@ function checkId(request,response,next){
     next()
 }
 
-export default checkId();
+export {checkId};
 
 
 
