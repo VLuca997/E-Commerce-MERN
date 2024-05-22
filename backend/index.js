@@ -9,7 +9,7 @@ import connectDB from "./config/DB.js";
 //ROUTES
 import userRoutes from './routes/userRoutes.js'
 import categoryRoutes from './routes/categotyRoutes.js'
-
+import productRoutes from './routes/productRoutes.js'
 
 
 
@@ -26,6 +26,7 @@ app.use(cookieParser());
 //ROTTE
 app.use('/api/users', userRoutes)
 app.use('/api/category', categoryRoutes)
+app.use('/api/products', productRoutes)
 
 
 
